@@ -1,74 +1,74 @@
 module alu(
     input [3:0] FS, //functional select
-    input reg [15:0] SR, //Rs -> source
-    input reg [15:0] TR, //Rt -> transfer
-    output reg [15:0] DR, //Rd -> destination
+    input [15:0] A, //Rs -> source
+    input [15:0] B, //Rt -> transfer
+    output reg [15:0] F, //Rd -> destination
     output reg V,
     output reg C,
     output reg N,
     output reg Z //Z flag
 );
 
-always @ (FS or SR or TR or DR)
+always @ (FS or A or B or F)
 begin
 
     case(FS[2:0])
     4'h0: // 0000 -> ADD
         begin
-            {C,DR} = SR + TR;
-            V = (!DR[15] & SR[15] & TR[15]) | (DR[15] & !SR[15] & !TR[15]);
+            {C,F} = A + B;
+            V = (!F[15] & A[15] & B[15]) | (F[15] & !A[15] & !B[15]);
         end
     4'h1: // 0001 -> SUB
         begin
-            {C,DR} = SR - TR;
-            V = (!DR[15] & SR[15] & TR[15]) | (DR[15] & !SR[15] & !TR[15]);
+            {C,F} = A - B;
+            V = (!F[15] & A[15] & B[15]) | (F[15] & !A[15] & !B[15]);
         end
     4'h2: // 0010 -> AND
         begin
-            DR <= SR & TR;
+            F <= A & B;
             C <= 0;
             V <= 0;
         end
     4'h3: // 0011 -> OR
         begin
-            DR <= SR | TR;
+            F <= A | B;
             C <= 0;
             V <= 0;
         end
     4'h4: // 0100 -> XOR
         begin
-            DR <= SR ^ TR;
+            F <= A ^ B;
             C <= 0;
             V <= 0;
         end
     4'h5: //0101 -> NOT
         begin
-            DR <= ~SR;
+            F <= ~A;
             C <= 0;
             V <= 0;
         end
     4'h6: //0110 -> SLA
         begin
-            DR <= SR <<< 1;
+            F <= A <<< 1;
             C <= 0;
             V <= 0;
         end
-    4'h0: //0111 -> SRA
+    4'h0: //0111 -> AA
         begin
-            DR <= SR >>> 1;
+            F <= A >>> 1;
             C <= 0;
             V <= 0;
         end
     default: 
         begin
-            DR <= 0;
+            F <= 0;
             C <= 0;
             V <= 0;
         end
+    endcase
 
-
-    assign Z <= (DR == 16'b0) ? 1 : 0;
-    assign N <= (DR[15] == 0) ? 1 : 0;
+    assign Z <= (F == 16'b0) ? 1 : 0;
+    assign N <= (F[15] == 0) ? 1 : 0;
     
 end
 endmodule
