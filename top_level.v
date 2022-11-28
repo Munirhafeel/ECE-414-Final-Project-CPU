@@ -1,23 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: University of Miami
-// Engineer: Diego Palacios
-// 
-// Create Date:    17:00:47 10/22/2013 
-// Design Name: RISC CPU
-// Module Name:    top_level 
-// Project Name: ECE 414 Final Project
-// Target Devices: 
-// Tool versions: 
-// Description: top level wires and modules for student designed CPU's
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
 module top_level(
     input reset,
     input clk,
