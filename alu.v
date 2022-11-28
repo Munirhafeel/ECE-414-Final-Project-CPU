@@ -20,7 +20,7 @@ begin
         end
     4'h1: // 0001 -> SUB
         begin
-            {C,DR} = SR + TR;
+            {C,DR} = SR - TR;
             V = (!DR[15] & SR[15] & TR[15]) | (DR[15] & !SR[15] & !TR[15]);
         end
     4'h2: // 0010 -> AND
