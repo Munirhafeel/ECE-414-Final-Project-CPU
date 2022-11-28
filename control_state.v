@@ -1,18 +1,16 @@
-module control_state(
-    input clk,
-    input clear,
-    input fed_state,
-    output state
+`timescale 1ps/1ps
 
+module control_state(
+    input NS, // NS (next-state) control word
+    input clk, reset,
+    output reg next_state
 );
 
-always @ (posedge clk)
-begin
-    if (clear)
-        state <= 1'b0;
+always @ (posedge clk) begin
+    if (reset)
+        next_state <= 1'b0;
     else
-        state <= fed_state;
+        next_state <= ~NS;
 end
 
-
-//boilerplate
+endmodule
