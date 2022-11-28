@@ -25,7 +25,7 @@ always @ (posedge clk) begin
         end
         2'b10:
         begin
-            PC <= PC + ; // 
+            PC <= PC + {DR,SB} + 1; // 
         end
         2'b11:
         begin

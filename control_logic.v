@@ -15,7 +15,6 @@ module control_logic(
     output reg MM, 
     output reg MW, 
     output reg WP, //Write PC
-
 );
 
 always @(*) 
@@ -145,6 +144,5 @@ always @(*)
                                 end
                     end
             end
-        
     end
 endmodule
