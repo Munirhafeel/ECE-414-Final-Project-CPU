@@ -1,74 +1,83 @@
 module alu(
-    input [3:0] FS, //functional select
-    input [15:0] A, //Rs -> source
-    input [15:0] B, //Rt -> transfer
-    output reg [15:0] F, //Rd -> destination
-    output reg V,
-    output reg C,
-    output reg N,
-    output reg Z //Z flag
+    input [3:0] FS, // Function Select
+    input [15:0] A, // A-Bus -> Source-A - Register A
+    input [15:0] B, // B-Bus -> Source-B - Register B
+    output reg [15:0] data_out, // F-Bus - Output - Result
+    output reg V, // V Flag
+    output reg C, // C Flag -> overflow
+    output reg N, // N Flag -> negative
+    output reg Z  // Z Flag -> zero
 );
 
-always @ (FS or A or B or F)
+parameter ADD = 4'h0;
+parameter SUB = 4'h1;
+parameter AND = 4'h2;
+parameter OR  = 4'h3;
+parameter XOR = 4'h4;
+parameter NOT = 4'h5;
+parameter SLA = 4'h6;
+parameter SRA = 4'h7;
+
+always @ (FS or A or B or data_out)
 begin
 
-    case(FS[2:0])
-    4'h0: // 0000 -> ADD
+    case(FS[3:0])
+    ADD:
         begin
-            {C,F} = A + B;
-            V = (!F[15] & A[15] & B[15]) | (F[15] & !A[15] & !B[15]);
+            {C,data_out} <= A + B;
+            V = (!data_out[15] & A[15] & B[15]) | (data_out[15] & !A[15] & !B[15]);
         end
-    4'h1: // 0001 -> SUB
+    SUB:
         begin
-            {C,F} = A - B;
-            V = (!F[15] & A[15] & B[15]) | (F[15] & !A[15] & !B[15]);
+            {C,data_out} <= A - B;
+            V = (!data_out[15] & A[15] & B[15]) | (data_out[15] & !A[15] & !B[15]);
         end
-    4'h2: // 0010 -> AND
+    AND:
         begin
-            F <= A & B;
+            data_out <= A & B;
             C <= 0;
-            V <= 0;
+            V = 0;
         end
-    4'h3: // 0011 -> OR
+    OR:
         begin
-            F <= A | B;
+            data_out <= A | B;
             C <= 0;
-            V <= 0;
+            V = 0;
         end
-    4'h4: // 0100 -> XOR
+    XOR:
         begin
-            F <= A ^ B;
+            data_out <= A ^ B;
             C <= 0;
-            V <= 0;
+            V = 0;
         end
-    4'h5: //0101 -> NOT
+    NOT:
         begin
-            F <= ~A;
+            data_out <= ~A;
             C <= 0;
-            V <= 0;
+            V = 0;
         end
-    4'h6: //0110 -> SLA
+    SLA:
         begin
-            F <= A <<< 1;
+            data_out <= A <<< 1;
             C <= 0;
-            V <= 0;
+            V = 0;
         end
-    4'h0: //0111 -> AA
+    SRA:
         begin
-            F <= A >>> 1;
+            data_out <= A >>> 1;
             C <= 0;
-            V <= 0;
+            V = 0;
         end
     default: 
         begin
-            F <= 0;
+            data_out <= 0;
             C <= 0;
-            V <= 0;
+            V = 0;
         end
     endcase
 
-    assign Z <= (F == 16'b0) ? 1 : 0;
-    assign N <= (F[15] == 0) ? 1 : 0;
+    Z <= (data_out == 16'b0) ? 1'b1 : 1'b0;
+    N <= (data_out[15] == 0) ? 1'b1 : 1'b0;
     
 end
 endmodule
