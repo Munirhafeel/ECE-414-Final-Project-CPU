@@ -3,8 +3,8 @@
 module control_unit (
     input clk, reset,
     input [15:0] instruction,   // instruction fetched from ROM
-    input [15:0] A_bus          // A Bus (Address-A Data)
-    input Z,                    // Z Flag | Signal
+    input [15:0] A_bus,         // A Bus (Address-A Data)
+    input V, C, N, Z,                    // Z Flag | Signal
     output [3:0] DR, SA, SB,    // Instruction Register -> Destination Register, Source Register A, Source Register B
     output [5:0] PC,
     // Control Word
@@ -34,7 +34,7 @@ instruction_register IR (
 
 control_logic CL (
     .state(pstate_bus),
-    .Z(Z),
+    .V(V), .C(C), .N(N), .Z(Z),
     .opcode(opcode_bus),
     .eoe(instruction[11:8]),
     .next_state(NS_bus),

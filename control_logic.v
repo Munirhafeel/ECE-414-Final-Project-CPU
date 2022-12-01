@@ -2,9 +2,9 @@
 
 module control_logic (
     input state, 
-    input Z, //zero from ALU
+    input V, C, N, Z, // zero from ALU
     input [3:0] opcode,
-    input [3:0] eoe, //pseudo end of execution
+    input [3:0] eoe, // pseudo end of execution
     output reg next_state,
     output reg [3:0] FS,
     output reg [1:0] PS,
