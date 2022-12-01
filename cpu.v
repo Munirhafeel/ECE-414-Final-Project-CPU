@@ -13,7 +13,6 @@ module CPU (
                             // this signal indicates that all operations of the CPU are finished
 );
 
-// RAM
 wire [15:0] address_bus;
 // control unit
 wire [3:0] DR_bus, SA_bus, SB_bus;
@@ -34,18 +33,19 @@ control_unit control (
     .instruction(data_from_rom),
     .A_bus(address_bus),
     .V(V_bus), .C(C_bus), .N(N_bus), .Z(Z_bus),
-    .DR(DR_bus), SA(SA_bus), SB(SB_bus),
+    .DR(DR_bus), .SA(SA_bus), .SB(SB_bus),
     .PC(PC_bus),
-    .MB(MB_bus), MD(MD_bus), RW(RW_bus), MM(MM_bus), MW(write_enable_to_ram),
+    .MB(MB_bus), .MD(MD_bus), .RW(RW_bus), .MM(MM_bus), .MW(write_enable_to_ram),
     .FS(FS_bus)
 );
 
 datapath data_path (
     .clk(clk), .reset(reset),
     .data_in(data_ram),
-    .PC(PC_bus);
+    .PC(PC_bus),
     .DR(DR_bus), .SA(SA_bus), .SB(SB_bus),
-    .MB(MB_bus), .MD(MD_bus), .RW(RW_bus), MM(MM_bus),
+    .MB(MB_bus), .MD(MD_bus), .RW(RW_bus), .MM(MM_bus),
+    .FS(FS_bus),
     .data_out(data_ram),
     .address_out(address_bus),
     .V(V_bus), .C(C_bus), .N(N_bus), .Z(Z_bus)
