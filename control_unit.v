@@ -17,7 +17,7 @@ wire [3:0] opcode_bus;
 wire [1:0] PS_bus;      // PC Select
 wire NS_bus, pstate_bus, IL_bus;    // Next State | Instruction Load
 
-program_counter PC (
+program_counter PC_R (
     .SA(SA), .SB(SB),
     .A_bus(A_bus[5:0]),
     .PS(PS_bus),
