@@ -30,7 +30,6 @@ always @(*)
                 MM <= 1'b1;
                 MW <= 1'b0;
                 MW <= 1'b0;
-                WP <= 1'b0;
             end
         else if (state == 1'b1) // EX0
             begin
@@ -109,7 +108,6 @@ always @(*)
                                     RW <= 1'b0;
                                     MM <= 1'b0;
                                     MW <= 1'b0;
-                                    WP <= 1'b0;
                                 end
                             3'b111: // JR - jump return
                                 begin
@@ -121,7 +119,6 @@ always @(*)
                                             RW <= 1'b0;
                                             MM <= 1'b0;
                                             MW <= 1'b0;
-                                            WP <= 1'b0;
                                         end
                                     else if (eoe == 4'b1111) // end of execution signal
                                         begin
@@ -131,7 +128,6 @@ always @(*)
                                             RW <= 1'b0;
                                             MM <= 1'b0;
                                             MW <= 1'b0;
-                                            WP <= 1'b0;
                                         end
                                 end
                         endcase
