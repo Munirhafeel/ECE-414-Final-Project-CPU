@@ -1,18 +1,16 @@
-module program_counter(
-    input DR, SB, // Source-B
-    input D, // D-Bus (MUX-D) 0 = Load Immediate || 1 = Memory
+`timescale 1ps/1ps
+
+module program_counter (
+    input [3:0] SA, SB, // Source-A Source-B
+    input [5:0] A_bus, // Address - Bus A
     input [1:0] PS, // PS Signal from Control Word (Control Logic)
     input clk, reset,
-    output [15:0] address;
+    output reg [5:0] PC; // program counter register
 );
-
-reg [15:0] PC;
-
-// sign extend SB, DR
 
 always @ (posedge clk) begin
     if (reset) begin
-        PC <= 16'b0'
+        PC <= 6'b0;
     end else begin
         case (PS)
         2'b00:
@@ -21,15 +19,15 @@ always @ (posedge clk) begin
         end
         2'b01:
         begin
-            PC <= PC + 1'b1; //
+            PC <= PC + 1'b1; // next instruction
         end
         2'b10:
         begin
-            PC <= PC + {DR,SB} + 1; // 
+            PC <= PC + 1'b1 + ({SA[1:0], SB}); // offset
         end
         2'b11:
         begin
-            PC <= PC; // 
+            PC <= A_bus;
         end
         endcase
     end
