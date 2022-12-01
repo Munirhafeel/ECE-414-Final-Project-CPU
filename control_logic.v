@@ -13,7 +13,7 @@ module control_logic (
     output reg MD, 
     output reg RW, 
     output reg MM, 
-    output reg MW,
+    output reg MW
 );
 
 always @(*) 
@@ -75,7 +75,7 @@ always @(*)
                                 end
                             3'b011: // BIZ - branch if zero
                                 begin
-                                    PS <= Z ? 1'b10 : 1'b01;
+                                    PS <= Z ? 2'b10 : 2'b01;
                                     MB <= 1'b0;
                                     MD <= 1'b0;
                                     RW <= 1'b0;
@@ -84,7 +84,7 @@ always @(*)
                                 end
                             3'b100: // BNZ - branch if not zero
                                 begin
-                                    PS <= Z ? 1'b01 : 1'b10;
+                                    PS <= Z ? 2'b01 : 2'b10;
                                     MB <= 1'b0;
                                     MD <= 1'b0;
                                     RW <= 1'b0;
@@ -129,9 +129,44 @@ always @(*)
                                             MM <= 1'b0;
                                             MW <= 1'b0;
                                         end
+                                    else
+                                        PS <= 2'b00;
+                                        MB <= 1'b0;
+                                        MD <= 1'b0;
+                                        RW <= 1'b0;
+                                        MM <= 1'b0;
+                                        MW <= 1'b0;
+                                end
+                            default:
+                                begin
+                                    PS <= 2'b00;
+                                    MB <= 1'b0;
+                                    MD <= 1'b0;
+                                    RW <= 1'b0;
+                                    MM <= 1'b0;
+                                    MW <= 1'b0;
                                 end
                         endcase
                     end
+                else
+                    begin
+                        PS <= 2'b00;
+                        MB <= 1'b0;
+                        MD <= 1'b0;
+                        RW <= 1'b0;
+                        MM <= 1'b0;
+                        MW <= 1'b0;
+                    end
+            end
+        else
+            begin
+                IL <= 1'b0;
+                PS <= 2'b00;
+                MB <= 1'b0;
+                MD <= 1'b0;
+                RW <= 1'b0;
+                MM <= 1'b0;
+                MW <= 1'b0;
             end
     end
 endmodule
