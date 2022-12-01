@@ -17,6 +17,14 @@ parameter XOR = 4'h4;
 parameter NOT = 4'h5;
 parameter SLA = 4'h6;
 parameter SRA = 4'h7;
+parameter LI  = 4'h8;
+parameter LW  = 4'h9;
+parameter SW  = 4'hA;
+parameter BIZ = 4'hB;
+parameter BNZ = 4'hC;
+parameter JAL = 4'hD;
+parameter JMP = 4'hE;
+parameter JR  = 4'hF;
 
 always @ (FS or A or B or data_out)
 begin
@@ -68,9 +76,57 @@ begin
             C <= 0;
             V = 0;
         end
+    LI:
+        begin
+            data_out <= B;
+            C <= 0;
+            V = 0;
+        end
+    LW:
+        begin
+            data_out <= data_out;
+            C <= 0;
+            V = 0;
+        end
+    SW:
+        begin
+            data_out <= data_out;
+            C <= 0;
+            V = 0;
+        end
+    BIZ:
+        begin
+            data_out <= A;
+            C <= 0;
+            V = 0;
+        end
+    BNZ:
+        begin
+            data_out <= A;
+            C <= 0;
+            V = 0;
+        end
+    JAL:
+        begin
+            data_out <= data_out;
+            C <= 0;
+            V = 0;
+        end
+    JMP:
+        begin
+            data_out <= data_out;
+            C <= 0;
+            V = 0;
+        end
+    JR:
+        begin
+            data_out <= A;
+            C <= 0;
+            V = 0;
+        end
     default: 
         begin
-            data_out <= 0;
+            data_out <= data_out;
             C <= 0;
             V = 0;
         end
