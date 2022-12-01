@@ -1,4 +1,4 @@
-module instruction_register(
+module instruction_register (
     input [15:0] instruction, // instruction fetched from ROM
     input IL, // instruction load
     input clk, reset,
@@ -22,11 +22,6 @@ always @ (negedge clk) begin
     DR     <= instruction_reg[11:8];
     SA     <= instruction_reg[7:4];
     SB     <= instruction_reg[3:0];
-
-    if ((opcode == 1011) || (opcode == 1100))
-        begin
-            SA <= DR; 
-        end
 end
 
 endmodule
