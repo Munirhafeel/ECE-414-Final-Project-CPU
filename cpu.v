@@ -3,9 +3,10 @@
 module CPU (
     input clk, reset,
     input [15:0] data_from_rom,
-    inout [15:0] data_ram,
+    input [15:0] data_from_ram,
     output [5:0] address_to_rom,
     output enable_to_rom,
+    output [15:0] data_to_ram,
     output [5:0] address_to_ram,
     output write_enable_to_ram,
     output read_enable_to_ram,
@@ -41,12 +42,12 @@ control_unit control (
 
 datapath data_path (
     .clk(clk), .reset(reset),
-    .data_in(data_ram),
+    .data_in(data_from_ram),
     .PC(PC_bus),
     .DR(DR_bus), .SA(SA_bus), .SB(SB_bus),
     .MB(MB_bus), .MD(MD_bus), .RW(RW_bus), .MM(MM_bus),
     .FS(FS_bus),
-    .data_out(data_ram),
+    .data_out(data_to_ram),
     .address_out(address_bus),
     .V(V_bus), .C(C_bus), .N(N_bus), .Z(Z_bus)
 );

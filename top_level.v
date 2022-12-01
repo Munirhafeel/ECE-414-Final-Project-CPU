@@ -83,7 +83,7 @@ module top_level(
 		);
 			
 		
-	 myCPU dummy_unit1(										//reads ROM and writes to RAM
+	 CPU myCPU (										//reads ROM and writes to RAM
     .data_from_rom(wr_data_out_from_rom),						// 16 bit
     .reset(reset),
 	 .clk(clk_cpu),
