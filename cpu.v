@@ -32,7 +32,7 @@ assign address_to_ram = address_bus[5:0];
 control_unit control (
     .clk(clk), .reset(reset),
     .instruction(data_from_rom),
-    .A_bus(), // ? address from rom or source A
+    .A_bus(address_bus),
     .V(V_bus), .C(C_bus), .N(N_bus), .Z(Z_bus),
     .DR(DR_bus), SA(SA_bus), SB(SB_bus),
     .PC(PC_bus),
@@ -47,7 +47,7 @@ datapath data_path (
     .DR(DR_bus), .SA(SA_bus), .SB(SB_bus),
     .MB(MB_bus), .MD(MD_bus), .RW(RW_bus), MM(MM_bus),
     .data_out(data_ram),
-    .address_out(), // ?
+    .address_out(address_bus),
     .V(V_bus), .C(C_bus), .N(N_bus), .Z(Z_bus)
 );
 
