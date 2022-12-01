@@ -5,7 +5,7 @@ module program_counter (
     input [5:0] A_bus, // Address - Bus A
     input [1:0] PS, // PS Signal from Control Word (Control Logic)
     input clk, reset,
-    output reg [5:0] PC; // program counter register
+    output reg [5:0] PC // program counter register
 );
 
 always @ (posedge clk) begin
@@ -31,7 +31,6 @@ always @ (posedge clk) begin
         end
         endcase
     end
-    address <= PC;
 end   
 
 endmodule
