@@ -46,7 +46,7 @@ control_logic CL (
 
 control_state CS (
     .NS(NS_bus),
-    .clk(clk), .reset(clk),
+    .clk(clk), .reset(reset),
     .next_state(pstate_bus)
 );
 
