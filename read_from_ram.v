@@ -1,23 +1,23 @@
 `timescale 1ns / 1ps
 
 module read_from_ram(
-    input clk,
-	 input reset,
-    input [15:0] data_from_ram,
-    input uart_ready,
-    output reg [5:0] address_to_ram,
-    output reg read_enable_to_ram,
-    output reg uart_send,
-    output reg [7:0] uart_data
-    );
+	input clk,
+	input reset,
+	input [15:0] data_from_ram,
+	input uart_ready,
+	output reg [5:0] address_to_ram,
+	output reg read_enable_to_ram,
+	output reg uart_send,
+	output reg [7:0] uart_data
+);
 
 	//reg[3:0] mem_counter ;
 	reg[2:0] byte_counter ;			// 2+2=4 bytes including new line code
-	reg stop ;							//stop reading the ram 
-	reg uart_sec_free ; 				// sending 32bit word to uart finished
+	reg stop ;						// stop reading the ram 
+	reg uart_sec_free ;				// sending 32bit word to uart finished
 	reg read_input_from_ram ;
-	//reg [7:0] byte1 ;              //byte3, byte2 ;
-	reg [3:0] hex1, hex2, hex3 ;    // store [11:0] of the 16 bit ram line
+	//reg [7:0] byte1 ;			//byte3, byte2 ;
+	reg [3:0] hex1, hex2, hex3 ;	// store [11:0] of the 16 bit ram line
 	
 	
 	always @ (posedge clk)			//address_to_ram
@@ -31,7 +31,7 @@ module read_from_ram(
 	end
 
 	
-	always @ (posedge clk)				//stop reading ram (end reached.)
+	always @ (posedge clk)			//stop reading ram (end reached.)
 	begin
 		if (reset)
 			stop <= 0 ;
@@ -42,7 +42,7 @@ module read_from_ram(
 	end
 	
 	
-	always @ (posedge clk)				//read_enable_to_ram  ---should be single cycle
+	always @ (posedge clk)			//read_enable_to_ram  ---should be single cycle
 	begin
 		if (reset)
 			read_enable_to_ram <= 0 ;
@@ -51,7 +51,6 @@ module read_from_ram(
 		else 
 			read_enable_to_ram <= 0 ;
 	end
-	
 	
 		
 	always @ (posedge clk)				//byte_counter [ 4 data bytes and 2 new line bytes ]
@@ -67,7 +66,6 @@ module read_from_ram(
 	end
 
 
-	
 	always @ (posedge clk)				//read_input_from_ram
 	begin
 		if (reset)
@@ -123,9 +121,6 @@ always @ ( posedge clk ) 			//store data  (second byte)
 	end
 	
 	
-	
-	
-	
 	always @ (posedge clk)				//uart_send        
 	begin
 		if (reset)
@@ -137,9 +132,6 @@ always @ ( posedge clk ) 			//store data  (second byte)
 		else
 			uart_send <= 0;
 	end		
-
-
-	
 
 
 	always @ ( posedge clk ) 			//uart_data 8bit
@@ -247,7 +239,7 @@ always @ ( posedge clk ) 			//store data  (second byte)
 	end		
 	
 /*	
-		always @ ( posedge clk ) 			//uart_data 8bit
+	always @ ( posedge clk ) 			//uart_data 8bit
 	begin
 		if ( reset )
 			uart_data <= 8'd0 ;
